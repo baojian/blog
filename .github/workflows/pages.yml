@@ -2,8 +2,11 @@ name: Build and deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]  # change to "master" if that's your default
+    branches: [ "main" ]
   workflow_dispatch:
+
+env:
+  SITE_DIR: blog-theme   # <-- change to your subfolder, or "." for root
 
 permissions:
   contents: read
@@ -26,14 +29,17 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+          working-directory: ${{ env.SITE_DIR }}
 
       - name: Install dependencies
+        working-directory: ${{ env.SITE_DIR }}
         run: |
           gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
       - name: Build Jekyll
+        working-directory: ${{ env.SITE_DIR }}
         env:
           JEKYLL_ENV: production
         run: bundle exec jekyll build --trace --destination _site
@@ -41,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: ${{ env.SITE_DIR }}/_site
 
   deploy:
     needs: build
