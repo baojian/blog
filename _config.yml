@@ -1,26 +1,15 @@
 highlighter: rouge
 permalink: /blog/:year/:month/:day/:title/
-title: Baojian’s Blog
-description: Notes and research
-baseurl: "/blog"
 environment: prod
-url: "https://baojian.github.io"
+url: "http://gregorygundersen.com"  # Sitemap base URL.
 plugins:
   - jekyll-scholar
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-katex
-markdown: kramdown
-kramdown:
-  input: GFM
-  math_engine: mathjax
 katex:
   js_path: "assets"  # Path used to search for katex.min.js
   rendering_options:
     # Default KaTeX rendering options. See https://github.com/Khan/KaTeX#rendering-options
     throw_error: false      # throwOnError - set to false if you want rendering to output error as text rather than a build error
     error_color: "#cc0000"  # errorColor
-scholar:
-  style: apa
-  source: ./_bibliography
-  bibliography: references.bib
