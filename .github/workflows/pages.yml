@@ -2,7 +2,7 @@ name: Build and deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]   # or "master"
+    branches: [ "main" ]        # change to "master" if that's your default
   workflow_dispatch:
 
 permissions:
@@ -21,29 +21,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show tree (debug)
+      - name: Debug: show tree & key files
         run: |
           pwd
           ls -la
-          echo "Gemfile ruby line:" && (grep -E '^ruby' Gemfile || true)
+          echo "----- Gemfile -----"
+          sed -n '1,120p' Gemfile || true
+          echo "----- _config.yml -----"
+          sed -n '1,200p' _config.yml || true
 
       - name: Setup Ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: false     # IMPORTANT: avoid frozen/deployment mode
+          bundler-cache: false    # IMPORTANT: avoid frozen/deployment mode
 
-      - name: Bundle install (unfrozen; create new lockfile)
+      - name: Bundle (unfrozen) and generate fresh lockfile
         run: |
+          # ensure not in deployment/frozen mode
           bundle config unset deployment || true
+          # add linux platform to lockfile resolution
+          bundle lock --add-platform x86_64-linux || true
+          # install to vendor/bundle (cached across runs by Actions automatically)
           bundle config set path 'vendor/bundle'
-          bundle lock --add-platform x86_64-linux
           bundle install --jobs 4 --retry 3
+          bundle env
 
       - name: Build Jekyll
         env:
           JEKYLL_ENV: production
-        run: bundle exec jekyll build --trace --destination _site
+        run: |
+          bundle exec jekyll --version
+          bundle exec jekyll build --trace --destination _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
