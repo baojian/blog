@@ -5,9 +5,6 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-env:
-  SITE_DIR: blog   # <-- change to your subfolder, or "." for root
-
 permissions:
   contents: read
   pages: write
