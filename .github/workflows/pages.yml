@@ -2,7 +2,7 @@ name: Build and deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]   # or "master" if that's your default
+    branches: [ "main" ]   # or "master"
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true   # runs bundle install + caches gems
+          bundler-cache: false     # IMPORTANT: avoid frozen/deployment mode
+
+      - name: Bundle install (unfrozen; create new lockfile)
+        run: |
+          bundle config unset deployment || true
+          bundle config set path 'vendor/bundle'
+          bundle lock --add-platform x86_64-linux
+          bundle install --jobs 4 --retry 3
 
       - name: Build Jekyll
         env:
