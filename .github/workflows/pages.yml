@@ -2,7 +2,7 @@ name: Build and deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]   # or "master"
+    branches: [ "main" ]   # or "master" if that's your default
   workflow_dispatch:
 
 permissions:
@@ -21,22 +21,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install system deps for native gems (sassc)
+      - name: Show tree (debug)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential
+          pwd
+          ls -la
+          echo "Gemfile ruby line:" && (grep -E '^ruby' Gemfile || true)
 
-      - name: Setup Ruby 2.7 (compatible with Jekyll 3/early 4 stacks)
+      - name: Setup Ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.8'
-          bundler-cache: false   # we'll run bundle install ourselves after apt deps
-
-      - name: Bundle install
-        run: |
-          gem install bundler
-          bundle config set path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
+          ruby-version: '3.2'
+          bundler-cache: true   # runs bundle install + caches gems
 
       - name: Build Jekyll
         env:
