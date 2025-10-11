@@ -2,7 +2,7 @@ name: Build and deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]   # or "master"
   workflow_dispatch:
 
 permissions:
@@ -21,22 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
+      - name: Show tree (debug)
+        run: |
+          pwd
+          ls -la
+          (grep -E '^ruby' Gemfile || true)
+          (grep -A1 'RUBY VERSION' Gemfile.lock || true)
+
+      - name: Setup Ruby 2.7 (compatible with Jekyll 3.x)
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
-          bundler-cache: true
-          working-directory: ${{ env.SITE_DIR }}
-
-      - name: Install dependencies
-        working-directory: ${{ env.SITE_DIR }}
-        run: |
-          gem install bundler
-          bundle config set path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
+          ruby-version: '2.7.8'
+          bundler-cache: true   # runs bundle install and caches gems
 
       - name: Build Jekyll
-        working-directory: ${{ env.SITE_DIR }}
         env:
           JEKYLL_ENV: production
         run: bundle exec jekyll build --trace --destination _site
@@ -44,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.SITE_DIR }}/_site
+          path: _site
 
   deploy:
     needs: build
