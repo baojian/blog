@@ -21,18 +21,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show tree (debug)
+      - name: Install system deps for native gems (sassc)
         run: |
-          pwd
-          ls -la
-          (grep -E '^ruby' Gemfile || true)
-          (grep -A1 'RUBY VERSION' Gemfile.lock || true)
+          sudo apt-get update
+          sudo apt-get install -y build-essential
 
-      - name: Setup Ruby 2.7 (compatible with Jekyll 3.x)
+      - name: Setup Ruby 2.7 (compatible with Jekyll 3/early 4 stacks)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7.8'
-          bundler-cache: true   # runs bundle install and caches gems
+          bundler-cache: false   # we'll run bundle install ourselves after apt deps
+
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
 
       - name: Build Jekyll
         env:
