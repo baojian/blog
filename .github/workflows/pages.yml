@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  SITE_DIR: blog-theme   # <-- change to your subfolder, or "." for root
+  SITE_DIR: blog   # <-- change to your subfolder, or "." for root
 
 permissions:
   contents: read
