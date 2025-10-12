@@ -19,3 +19,5 @@ katex:
 
 exclude:
   - drafts/
+
+future: true
