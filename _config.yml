@@ -1,7 +1,8 @@
 highlighter: rouge
-permalink: /blog/blog/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 environment: prod
-url: "https://baojian.github.io"     # base domain
+url: "https://baojian.github.io/blog"     # base domain
+baseurl: ""
 plugins:
   - jekyll-scholar
   - jekyll-sitemap
