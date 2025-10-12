@@ -11,8 +11,8 @@ title: blog
     <meta name='keywords' content='machine learning, statistical machine learning, linear algebra'>
     <meta name='author' content='Baojian Zhou'>
     
-    <link rel='shortcut icon' href="{{ '/favicon.png?v=e' | relative_url }}" />
-    <link rel='stylesheet' href="{{ '/css/blog.css' | relative_url }}"/>
+    <link rel='shortcut icon' href="{{ '/favicon.png?v=e' | absolute_url }}" />
+    <link rel='stylesheet' href="{{ '/css/blog.css' | absolute_url }}"/>
 
     {% include mathjax.html %}
 </head>
@@ -23,7 +23,7 @@ title: blog
             {% for post in site.posts %}
                 <div class='post-row'>
                     <p class='post-title'>
-                        <a href="{{ post.url | relative_url }}">
+                        <a href="{{ post.url | absolute_url }}">
                             {% katexmm %}
                             {{ post.title }}
                             {% endkatexmm %}
