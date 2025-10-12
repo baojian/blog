@@ -6,3 +6,5 @@ date: 2025-10-14
 keywords: Transformer, attention, multi-head attention
 published: true
 ---
+
+In this post, we will introduce the architecture.
