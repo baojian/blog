@@ -1,5 +1,5 @@
 highlighter: rouge
-permalink: /:year/:month/:day/:title/
+permalink: /blog/blog/:year/:month/:day/:title/
 environment: prod
 url: "https://baojian.github.io"     # base domain
 plugins:
