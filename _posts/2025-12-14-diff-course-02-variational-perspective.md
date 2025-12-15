@@ -21,6 +21,9 @@ $$
 \mathcal{L}_{\text{Vanilla-AE}}(\mathbf{\theta},\mathbf{\phi}) := \frac{1}{N} \sum_{i=1}^N \left\| \mathbf{x}^{(i)} -  f_{\mathbf{\theta}}\big( g_{\mathbf{\phi}} ( \mathbf{x}^{(i)} ) \big)\right\|_2^2
 $$
 
+
+
+
 There are variants of vanilla autoencoder:
 
 1. **Denoising autoencoder ({% vincent2008extracting %})**
