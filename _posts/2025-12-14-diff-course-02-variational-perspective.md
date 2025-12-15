@@ -13,8 +13,8 @@ This blog explains the main content of Chapter 2 in [The Principles of Diffusion
 
 The autoencoder model was originally developed by [Hinton and Salakhutdinov](https://www.cs.toronto.edu/~hinton/absps/science.pdf) {% cite hinton2006reducing %}. In this paper, an AE model is trained via a deep neural network, which maps high-dimensional data points $\mathbf{x}$ to low-dimensional codes $\mathbf{z}$. These latent codes are good representation of original data points and used for the task of classification, regression, document retrival, and visualization, etc. It contains an encoder and a decoder:
 
-- Encoder function $f_\theta: \mathbb{R}^D \rightarrow \mathbb{R}^d$ 
-- Decoder function $g_\phi: \mathbb{R}^d \rightarrow \mathbb{R}^D$
+- Encoder function $f_{\theta}: \mathbb{R}^D \rightarrow \mathbb{R}^d$ 
+- Decoder function $g_{\phi}: \mathbb{R}^d \rightarrow \mathbb{R}^D$
 
 We assume the data points are from continuous probability distribution $p_{\text{data}}(\mathbf{x})$. Given a set of data points $\{\mathbf{x}^{(i)}: i=1,2,\ldots,N\}$ sampled i.i.d. from $p_{\text{data}}$, the training procedure of an AE model tries to minimize the following objective function:
 $$
@@ -26,7 +26,7 @@ $$
 
 There are variants of vanilla autoencoder:
 
-1. **Denoising autoencoder ({% vincent2008extracting %})**
+1. **Denoising autoencoder ({% cite vincent2008extracting %})**
     >ddd
     > 
 
